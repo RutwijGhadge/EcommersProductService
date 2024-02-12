@@ -6,7 +6,7 @@ import com.example.ProductCategoryService.Models.Product;
 
 import java.util.List;
 
-public interface IProductServices {
+public interface IProductServices {git 
     List<Product>  getProducts();
 
     Product getProduct(long id);
