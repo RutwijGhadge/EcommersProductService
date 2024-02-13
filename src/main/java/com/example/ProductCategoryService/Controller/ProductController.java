@@ -1,6 +1,7 @@
 package com.example.ProductCategoryService.Controller;
 
 import com.example.ProductCategoryService.DTOs.ProductDTO;
+import com.example.ProductCategoryService.Models.Category;
 import com.example.ProductCategoryService.Models.Product;
 import com.example.ProductCategoryService.Services.IProductServices;
 import org.springframework.http.HttpStatus;
@@ -46,7 +47,26 @@ public class ProductController {
 
         @PostMapping("")
         public Product createProduct(@RequestBody ProductDTO productDTO){
-            return productServices.createProduct(productDTO);
+            Product product=getProductFromDto((productDTO));
+            return productServices.createProduct(product);
+        }
+
+        @PatchMapping("")
+        public Product updateProduct(@PathVariable(value = "id")Long id,@RequestBody Product product){
+            return productServices.updateProduct(id,product);
+        }
+
+
+        private Product getProductFromDto(ProductDTO productDTO){
+            Product product=new Product();
+            product.setTitle(productDTO.getTitle());
+            product.setPrice(productDTO.getPrice());
+            product.setDescription(productDTO.getDescription());
+            product.setImage(productDTO.getImage());
+            Category category=new Category();
+            category.setName(productDTO.getCategory());
+            product.setCategory(category);
+            return product;
         }
 }
 

@@ -6,12 +6,12 @@ import com.example.ProductCategoryService.Models.Product;
 
 import java.util.List;
 
-public interface IProductServices {git 
+public interface IProductServices {
     List<Product>  getProducts();
 
     Product getProduct(long id);
 
-    Product createProduct(ProductDTO productDTO);
+    Product createProduct(Product product);
 
-    String updateProduct();
+    Product updateProduct(Long id, Product product);
 }
