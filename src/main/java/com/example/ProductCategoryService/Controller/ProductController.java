@@ -5,7 +5,6 @@ import com.example.ProductCategoryService.Models.Category;
 import com.example.ProductCategoryService.Models.Product;
 import com.example.ProductCategoryService.Services.IProductServices;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,10 +36,12 @@ public class ProductController {
             try{
                 if(ids<1)
                     throw new IllegalArgumentException("Product Id is <1");
+
                 Product product= productServices.getProduct(ids);
                 return new ResponseEntity<>(product, HttpStatus.OK);
             }catch (Exception e){
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+              //  return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                throw e;
             }
 
         }
@@ -50,14 +51,17 @@ public class ProductController {
             Product product=getProductFromDto((productDTO));
             return productServices.createProduct(product);
         }
-
-        @PatchMapping("")
-        public Product updateProduct(@PathVariable(value = "id")Long id,@RequestBody Product product){
+    //Partial Changes -> patchMapping
+    //Replacing Complete Object ->putMapping
+        @PatchMapping("{id}")
+        public Product updateProduct(@PathVariable(value = "id")Long id,@RequestBody ProductDTO productDTO){
+            Product product=getProductFromDto(productDTO);
             return productServices.updateProduct(id,product);
         }
 
-
-        private Product getProductFromDto(ProductDTO productDTO){
+        //Product(Internal Implementation cannot be exposed & widely accepted) is sent to service layer by controller
+        //so the productDTo(sent by External User) is converted to Product in the below method
+        private Product getProductFromDto(ProductDTO productDTO){//productDtO -> received from User
             Product product=new Product();
             product.setTitle(productDTO.getTitle());
             product.setPrice(productDTO.getPrice());
@@ -68,6 +72,9 @@ public class ProductController {
             product.setCategory(category);
             return product;
         }
+
+
+
 }
 
 

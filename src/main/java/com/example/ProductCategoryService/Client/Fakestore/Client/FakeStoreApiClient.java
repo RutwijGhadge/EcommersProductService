@@ -29,5 +29,10 @@ public class FakeStoreApiClient {
         return fakeStoreProductDTOResponseEntity.getBody();
     }
 
+    /*public FakeStoreProductDTO updateProduct(FakeStoreProductDTO fakeStoreProductDTO){
+        RestTemplate restTemplate=restTemplateBuilder.build();
+        restTemplate.
+    }*/
+
 
 }

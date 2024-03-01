@@ -3,12 +3,16 @@ package com.example.ProductCategoryService.Models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Getter
 @Setter
-public abstract class BaseModel {
+@MappedSuperclass
+public class BaseModel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private Date CreatedAt;
     private Date LastUpdatedAt;
