@@ -1,6 +1,6 @@
 package com.example.ProductCategoryService.Services;
 
-import com.example.ProductCategoryService.DTOs.ProductDTO;
+
 import com.example.ProductCategoryService.Models.Product;
 
 
