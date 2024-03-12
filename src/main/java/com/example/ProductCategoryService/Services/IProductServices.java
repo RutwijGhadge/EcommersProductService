@@ -14,4 +14,8 @@ public interface IProductServices {
     Product createProduct(Product product);
 
     Product updateProduct(Long id, Product product);
+
+    String deleteProduct(Long id);
+
+    void putProduct(Long id,Product product);
 }

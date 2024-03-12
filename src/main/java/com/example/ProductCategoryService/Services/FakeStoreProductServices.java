@@ -6,8 +6,7 @@ import com.example.ProductCategoryService.DTOs.ProductDTO;
 import com.example.ProductCategoryService.Models.Category;
 import com.example.ProductCategoryService.Models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+@Service
 public class FakeStoreProductServices implements IProductServices {
 
     private RestTemplateBuilder restTemplateBuilder;
@@ -43,6 +42,20 @@ public class FakeStoreProductServices implements IProductServices {
     }
 
     @Override
+    public void putProduct(Long id, Product product) {
+        RestTemplate restTemplate=new RestTemplate();
+        HttpHeaders httpHeaders=new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Product>requestEntity=new HttpEntity<>(product,httpHeaders);
+        restTemplate.exchange("https://fakestoreapi.com/products/{id}",HttpMethod.PUT,requestEntity,Product.class,id);
+
+        /* RestTemplate restTemplate=restTemplateBuilder.build();
+        restTemplate.put("https://fakestoreapi.com/products/{id}",Product.class,id);
+        */
+    }
+
+
+    @Override
     public Product getProduct(long productID) {//get the particular/Specific details of the product with id
        // RestTemplate restTemplate=restTemplateBuilder.build();
        // FakeStoreProductDTO fakeStoreProductDTO=restTemplate.getForEntity("https://fakestoreapi.com/products/{id}", FakeStoreProductDTO.class,productID).getBody();
@@ -53,31 +66,43 @@ public class FakeStoreProductServices implements IProductServices {
     }
 
     @Override
+    public String deleteProduct(Long id) {
+            return null;
+    }
+
+
+    @Override
     public Product createProduct(Product product) {//create / add the Product
       //  RestTemplate restTemplate=restTemplateBuilder.build();
       //  FakeStoreProductDTO fakeStoreProductDTO=restTemplate.postForEntity("https://fakestoreapi.com/products",product,FakeStoreProductDTO.class).getBody();
         FakeStoreProductDTO fakeStoreProductDTO=getFakeStoreProductDTOFromProduct(product);
         return getProduct(fakeStoreApiClient.createProduct(fakeStoreProductDTO));
     }
-
     //Own Implementation of RestAPI
-    public <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod,String url, @Nullable Object request, Class<T> responseType, Object... uriVariables) throws RestClientException {
-        RestTemplate restTemplate=restTemplateBuilder.requestFactory(
+    private  <T> ResponseEntity<T> requestForEntity(HttpMethod httpMethod,String url, @Nullable Object request, Class<T> responseType, Object... uriVariables) throws RestClientException {
+      /*  RestTemplate restTemplate=restTemplateBuilder.requestFactory(
                 HttpComponentsClientHttpRequestFactory.class
-        ).build();
+        ).build();*/
+        RestTemplate restTemplate=restTemplateBuilder.build();
         RequestCallback requestCallback = restTemplate.httpEntityCallback(request, responseType);
         ResponseExtractor<ResponseEntity<T>> responseExtractor = restTemplate.responseEntityExtractor(responseType);
-        return restTemplate.execute(url, HttpMethod.POST, requestCallback, responseExtractor, uriVariables);
+        return restTemplate.execute(url,httpMethod, requestCallback, responseExtractor, uriVariables);
     }
-
 
     @Override
     public Product updateProduct(Long id, Product product) {//update a Product
         RestTemplate restTemplate=restTemplateBuilder.build();
-      //FakeStoreProductDTO fakeStoreProductDTO=restTemplate.patchForObject("https://fakestoreapi.com/{id}", product , FakeStoreProductDTO.class,id);
-        ResponseEntity<FakeStoreProductDTO> fakeStoreProductDTO=requestForEntity(HttpMethod.PATCH,"https://fakestoreapi.com/{id}",product , FakeStoreProductDTO.class,id);
-        return getProduct(fakeStoreProductDTO.getBody());
+      // FakeStoreProductDTO fakeStoreProductDTO=restTemplate.patchForObject("https://fakestoreapi.com/products/{id}", product , FakeStoreProductDTO.class,id);
+
+
+       ResponseEntity<FakeStoreProductDTO> fakeStoreProductDTO=requestForEntity(HttpMethod.PATCH,"https://fakestoreapi.com/products/{id}",product,FakeStoreProductDTO.class,id);
+      // FakeStoreProductDTO fakeStoreProductDTO2=getFakeStoreProductDTOFromProduct(product);
+       //FakeStoreProductDTO fakeStoreProductDTO1=fakeStoreApiClient.updateProduct(fakeStoreProductDTO);
+
+        Product resultantProduct=getProduct(fakeStoreProductDTO.getBody());
+        return resultantProduct;
     }
+
 
     private Product getProduct(FakeStoreProductDTO productDTO){
         Product product=new Product();

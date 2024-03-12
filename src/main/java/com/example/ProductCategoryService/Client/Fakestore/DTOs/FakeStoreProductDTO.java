@@ -14,5 +14,5 @@ public class FakeStoreProductDTO {
     private String image;
     private double price;
     private String category;//category of a product
-    private FakeStoreRatingDTO ratingDTO;
+   private FakeStoreRatingDTO ratingDTO;
 }

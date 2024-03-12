@@ -46,9 +46,10 @@ public class ProductControllerMVCTest {
                         .andExpect(MockMvcResultMatchers.status().isOk())
                         //.andExpect(MockMvcResultMatchers.content().string("[]"));
                         .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(productList)));
-
         //Object->Json->String
     }
+    //String json = "{ \"title\" : \"Black\", \"price\" : \"10000\" }";
+    //Product product2=objectMapper.readValue(json,Product.class); from string -> object conversion
 
     @Test
     public void Test_createProduct_ReceivedSuccessfulResponse() throws Exception {
@@ -69,6 +70,11 @@ public class ProductControllerMVCTest {
                 .content(objectMapper.writeValueAsString(productToCreate)))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(productToExpect)));
+
+    }
+
+    @Test
+    public void Test_updateProduct_ReceiveSuccessfulResponse(){
 
     }
 

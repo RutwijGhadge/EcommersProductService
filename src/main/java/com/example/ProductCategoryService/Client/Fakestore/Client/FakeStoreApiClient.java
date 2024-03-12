@@ -23,6 +23,11 @@ public class FakeStoreApiClient {
         return fakeStoreProductDTO;
     }
 
+   /* public void deleteProduct(Long productId){
+        RestTemplate restTemplate=restTemplateBuilder.build();
+        restTemplate.delete("https://fakestoreapi.com/products/{id}");
+    }*/
+
     public FakeStoreProductDTO createProduct(FakeStoreProductDTO fakeStoreProductDTO) {//create / add the Product
         RestTemplate restTemplate=restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDTO> fakeStoreProductDTOResponseEntity=restTemplate.postForEntity("https://fakestoreapi.com/products",fakeStoreProductDTO,FakeStoreProductDTO.class);
@@ -31,8 +36,8 @@ public class FakeStoreApiClient {
 
     /*public FakeStoreProductDTO updateProduct(FakeStoreProductDTO fakeStoreProductDTO){
         RestTemplate restTemplate=restTemplateBuilder.build();
-        restTemplate.
+        FakeStoreProductDTO fakeStoreProductDTO1=restTemplate.patchForObject("https://fakestoreapi.com/products/{id}",fakeStoreProductDTO,FakeStoreProductDTO.class);
+        return fakeStoreProductDTO1;
     }*/
-
 
 }
