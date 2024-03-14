@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(ProductController.class)
 public class ProductControllerMVCTest {
@@ -45,7 +46,10 @@ public class ProductControllerMVCTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/products"))
                         .andExpect(MockMvcResultMatchers.status().isOk())
                         //.andExpect(MockMvcResultMatchers.content().string("[]"));
-                        .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(productList)));
+                        .andExpect(MockMvcResultMatchers.content().string(objectMapper.writeValueAsString(productList)))
+                        .andExpect(jsonPath("$.length()").value(2))//No of Products in the list
+                        .andExpect(jsonPath("$[0].title").value("Iphone12"));
+
         //Object->Json->String
     }
     //String json = "{ \"title\" : \"Black\", \"price\" : \"10000\" }";
