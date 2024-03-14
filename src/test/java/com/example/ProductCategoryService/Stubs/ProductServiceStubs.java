@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 //ProductServiceStubs will act as a ProductService
-@Service
+//@Service
 public class ProductServiceStubs implements IProductServices {
 
     Map<Long,Product> hm;//in place of DB
