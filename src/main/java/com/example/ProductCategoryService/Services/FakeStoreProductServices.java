@@ -2,14 +2,12 @@ package com.example.ProductCategoryService.Services;
 
 import com.example.ProductCategoryService.Client.Fakestore.Client.FakeStoreApiClient;
 import com.example.ProductCategoryService.Client.Fakestore.DTOs.FakeStoreProductDTO;
-import com.example.ProductCategoryService.DTOs.ProductDTO;
 import com.example.ProductCategoryService.Models.Category;
 import com.example.ProductCategoryService.Models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
@@ -18,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Service
+//@Service
 public class FakeStoreProductServices implements IProductServices {
 
     private RestTemplateBuilder restTemplateBuilder;

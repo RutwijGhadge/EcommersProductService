@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Service
 public class StorageProductService implements IProductServices{
     //this class will interact with ProductRepo
     ProductRepo productRepo;
-
 
     public StorageProductService(ProductRepo productRepo){
         this.productRepo=productRepo;

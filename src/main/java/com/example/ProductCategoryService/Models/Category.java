@@ -1,5 +1,6 @@
 package com.example.ProductCategoryService.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +14,6 @@ public class Category extends BaseModel{
     private String name;
     private String description;
     @OneToMany(mappedBy = "category" ,fetch =FetchType.EAGER)
+    @JsonBackReference
     private List<Product> product;
 }
