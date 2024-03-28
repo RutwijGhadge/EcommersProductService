@@ -7,6 +7,8 @@ import com.example.ProductCategoryService.Models.Product;
 import java.util.List;
 
 public interface IProductServices {
+    Product getProductDetails(Long userId,Long productId);
+
     List<Product>  getProducts();
 
     Product getProduct(long id);

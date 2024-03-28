@@ -19,6 +19,11 @@ public class ProductServiceStubs implements IProductServices {
     }
 
     @Override
+    public Product getProductDetails(Long userId, Long productId) {
+        return null;
+    }
+
+    @Override
     public List<Product> getProducts() {
         List<Product>products=new ArrayList<>();
         for(long m: hm.keySet()){

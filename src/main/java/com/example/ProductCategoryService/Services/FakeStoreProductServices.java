@@ -28,6 +28,11 @@ public class FakeStoreProductServices implements IProductServices {
     }
 
     @Override
+    public Product getProductDetails(Long userId, Long productId) {
+        return null;
+    }
+
+    @Override
     public List<Product> getProducts() {//get all products
         RestTemplate restTemplate=restTemplateBuilder.build();
         FakeStoreProductDTO[] fakeStoreProductDTOS=restTemplate.getForEntity("https://fakestoreapi.com/products", FakeStoreProductDTO[].class).getBody();
