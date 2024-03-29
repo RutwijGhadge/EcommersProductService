@@ -28,7 +28,7 @@ public class SearchController {
 //        for(Product product:products){
 //            productDTOS.add(getProductDTOFromProduct(product));
 //        }
-       return searchProductService.searchProduct(searchRequestDTO.getQuery(),searchRequestDTO.getPageNumber(),searchRequestDTO.getPageSize());
+       return searchProductService.searchProduct(searchRequestDTO.getQuery(),searchRequestDTO.getPageNumber(),searchRequestDTO.getPageSize(),searchRequestDTO.getSortParamList());
         //return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
