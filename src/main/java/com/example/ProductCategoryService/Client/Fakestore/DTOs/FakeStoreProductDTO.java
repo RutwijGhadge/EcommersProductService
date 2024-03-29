@@ -2,12 +2,14 @@ package com.example.ProductCategoryService.Client.Fakestore.DTOs;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class FakeStoreProductDTO {
+public class FakeStoreProductDTO implements Serializable {
     private long id;
     private String title;
     private String description;

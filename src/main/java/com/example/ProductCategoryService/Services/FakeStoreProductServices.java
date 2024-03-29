@@ -5,9 +5,12 @@ import com.example.ProductCategoryService.Client.Fakestore.DTOs.FakeStoreProduct
 import com.example.ProductCategoryService.Models.Category;
 import com.example.ProductCategoryService.Models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestClientException;
@@ -15,16 +18,18 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//@Service
+@Primary
+@Service
 public class FakeStoreProductServices implements IProductServices {
 
     private RestTemplateBuilder restTemplateBuilder;
     private FakeStoreApiClient fakeStoreApiClient;
+    private RedisTemplate<String,Object>redisTemplate;
 
-    public FakeStoreProductServices(RestTemplateBuilder restTemplateBuilder,FakeStoreApiClient fakeStoreApiClient) {
+    public FakeStoreProductServices(RestTemplateBuilder restTemplateBuilder,FakeStoreApiClient fakeStoreApiClient,RedisTemplate<String,Object>redisTemplate) {
         this.restTemplateBuilder = restTemplateBuilder;
         this.fakeStoreApiClient=fakeStoreApiClient;
+        this.redisTemplate=redisTemplate;
     }
 
     @Override
@@ -63,8 +68,24 @@ public class FakeStoreProductServices implements IProductServices {
        // RestTemplate restTemplate=restTemplateBuilder.build();
        // FakeStoreProductDTO fakeStoreProductDTO=restTemplate.getForEntity("https://fakestoreapi.com/products/{id}", FakeStoreProductDTO.class,productID).getBody();
 
-        //conversion logic of ProductDto to Product
-        FakeStoreProductDTO fakeStoreProductDTO=fakeStoreApiClient.getProduct(productID);
+
+        //check if the product is in Cache
+        // if yes
+            //Read the product from cache
+        //else
+            //call FakeStore and Get Result
+            //Store result in Cache
+
+
+        FakeStoreProductDTO fakeStoreProductDTO=null;
+        fakeStoreProductDTO=(FakeStoreProductDTO) redisTemplate.opsForHash().get("PRODUCTS",productID);
+        if(fakeStoreProductDTO!=null){
+            System.out.println("Read from Redis Cache");
+            return getProduct(fakeStoreProductDTO);
+        }
+        fakeStoreProductDTO=fakeStoreApiClient.getProduct(productID);
+        System.out.println("Read From FakeStoreAPI");
+        redisTemplate.opsForHash().put("PRODUCTS",productID,fakeStoreProductDTO);
         return getProduct(fakeStoreProductDTO);
     }
 
