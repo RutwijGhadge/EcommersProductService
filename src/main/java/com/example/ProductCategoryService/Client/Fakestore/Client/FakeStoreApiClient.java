@@ -1,8 +1,6 @@
 package com.example.ProductCategoryService.Client.Fakestore.Client;
 
 import com.example.ProductCategoryService.Client.Fakestore.DTOs.FakeStoreProductDTO;
-import com.example.ProductCategoryService.DTOs.ProductDTO;
-import com.example.ProductCategoryService.Models.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

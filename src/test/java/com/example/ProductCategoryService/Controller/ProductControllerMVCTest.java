@@ -3,7 +3,6 @@ package com.example.ProductCategoryService.Controller;
 import com.example.ProductCategoryService.Models.Product;
 import com.example.ProductCategoryService.Services.IProductServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -79,7 +78,7 @@ public class ProductControllerMVCTest {
 
     }
 
-   // @Test
+   //  @Test
     public void Test_updateProduct_ReceiveSuccessfulResponse(){
 
     }

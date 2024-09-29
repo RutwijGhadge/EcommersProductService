@@ -78,7 +78,7 @@ public class FakeStoreProductServices implements IProductServices {
 
 
         FakeStoreProductDTO fakeStoreProductDTO=null;
-        fakeStoreProductDTO=(FakeStoreProductDTO) redisTemplate.opsForHash().get("PRODUCTS",productID);
+        fakeStoreProductDTO=(FakeStoreProductDTO)   redisTemplate.opsForHash().get("PRODUCTS",productID);
         if(fakeStoreProductDTO!=null){
             System.out.println("Read from Redis Cache");
             return getProduct(fakeStoreProductDTO);
